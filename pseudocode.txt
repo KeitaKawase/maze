@@ -1,0 +1,72 @@
+// Main関数
+Input w(width), h(height)
+Make_maze(w, h)
+
+
+Make_maze(m, n):
+  """
+  迷路の作成ルーチン
+  m行n列の迷路を作る
+  """
+  maze = 2*n+1 * 2*m+1 の*で満たされた配列
+
+  // この配列の奇数番目は部屋、偶数番目は壁となる
+  walls = []
+    for r in range(m):
+        for c in range(n):
+            maze[2*r+1][2*c+1] = ' '
+            if r != m-1:
+                walls.append([r, c, r+1, c])
+            if c != n-1:
+                walls.append([r, c, r, c+1])
+
+  // 左上から順に、部屋に通し番号をつける
+  cluster_index = [i for i in range(m*n)]
+
+  // 壁のリストをシャッフル
+  random.shuffle(walls)
+
+  // シャッフルされた壁を、条件を満たしていたら壊す
+  // break_wall(壁, 幅, クラスタ番号, 迷路)
+  for w in walls:
+      break_wall(w, n, cluster_index, maze)
+      // 終了条件の判定
+      if check_finish(cluster_index):
+          break
+
+  # スタートとゴールを設定
+  maze[2*m-1][1] = 'S'  # 入口
+  maze[1][2*n-1] = 'G'  # 出口
+  
+  show_maze(maze)
+
+
+// 壁を壊す関数
+def break_wall(w, n, cluster_index, maze):
+    // 指定された壁(w)を壊してクラスタリング
+    // (ri, ci), (rj, cj)は壁wが隔てている部屋の座標
+    ri, ci, rj, cj = w
+
+    // i と j は、迷路の break_wall 関数において、二次元迷路グリッドの座標を一次元配列のインデックスに変換したもの
+    i = ci + ri * n
+    j = cj + rj * n
+
+    // i, jのクラスタ番号を get_cluster_indexで取得
+    cli = get_cluster_index(i, cluster_index)
+    clj = get_cluster_index(j, cluster_index)
+
+    // 同じクラスタに属す部屋は壊さない
+    if cli == clj:
+        return
+
+    // 隣の部屋をくっつける
+    connect(cli, clj, cluster_index)
+    if ci == cj:
+        # 縦の壁を壊す
+        maze[ri*2+2][ci*2+1] = ' '
+    else:
+        # 横の壁を壊す
+        maze[ri*2+1][ci*2+2] = ' '
+
+
+
