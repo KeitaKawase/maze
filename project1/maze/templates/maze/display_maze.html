@@ -1,0 +1,12 @@
+<!-- display_maze.html -->
+{% block content %}
+<h2>Maze</h2>
+<div style="font-family: monospace; line-height: 10px;">
+{% for row in maze %}
+  {% for column in row %}
+      {{ column }}
+  {% endfor %}
+  <br>
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+<!-- maze/templates/maze/draw_maze.html -->
+<!DOCTYPE html>
+{% load static %} 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draw Maze</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="mazeCanvas"></canvas>
+    <button onclick="submitMaze()">Submit Maze</button>
+
+    <script src="{% static 'maze/script.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeCanvas(ctx, parseInt("{{ width }}", 10), parseInt("{{ height }}", 10), 20);
+        });
+    </script>
+
+
+</body>
+</html>
