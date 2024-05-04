@@ -8,21 +8,22 @@
     <title>Draw Maze</title>
     <style>
         canvas {
-            border: 1px solid black;
+            border: 1px solid black; /* Ensure the canvas has a visible border */
+            background-color: white; /* Set the initial background to white */
         }
     </style>
 </head>
 <body>
-    <canvas id="mazeCanvas"></canvas>
+    <canvas id="mazeCanvas" width="480" height="320"></canvas> <!-- Set default canvas size -->
     <button onclick="submitMaze()">Submit Maze</button>
 
-    <script src="{% static 'maze/script.js' %}"></script>
+    <!-- Load the JavaScript files -->
+    <script src="{% static 'maze/initCanvas.js' %}"></script>
+    <script src="{% static 'maze/eventHandlers.js' %}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            initializeCanvas(ctx, parseInt("{{ width }}", 10), parseInt("{{ height }}", 10), 20);
+            initializeCanvas(parseInt("{{ width }}", 10), parseInt("{{ height }}", 10), 20);
         });
-    </script>
-
-
+    </script>    
 </body>
 </html>
