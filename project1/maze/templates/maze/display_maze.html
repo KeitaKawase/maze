@@ -1,12 +1,15 @@
-<!-- display_maze.html -->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'maze/styles.css' %}">
+
 {% block content %}
 <h2>Maze</h2>
-<div style="font-family: monospace; line-height: 10px;">
-{% for row in maze %}
-  {% for column in row %}
-      {{ column }}
+<div class="maze">
+  {% for row in maze %}
+    <div class="maze-row">
+      {% for cell in row %}
+        <div class="maze-cell {{ cell|lower }}">{{ cell }}</div>
+      {% endfor %}
+    </div>
   {% endfor %}
-  <br>
-{% endfor %}
 </div>
 {% endblock %}
