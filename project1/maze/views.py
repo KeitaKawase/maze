@@ -20,10 +20,8 @@ def generate_maze(request):
         width = int(data['width'])
         height = int(data['height'])
         drawing = data['drawing']
-        print("Received drawing:", drawing)  # デバッグ出力を追加
         maze = make_maze_from_drawing(height, width, drawing)
         request.session['maze_data'] = maze
-        # print("Maze data saved:", request.session['maze_data'])  # デバッグ出力
         return JsonResponse({'redirect_url': '/display/'})
     else:
         return JsonResponse({'error': 'Invalid HTTP method'}, status=405)
