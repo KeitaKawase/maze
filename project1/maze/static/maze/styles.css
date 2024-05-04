@@ -1,0 +1,42 @@
+.maze {
+  display: inline-block;
+  background: black;
+}
+
+.maze-row {
+  display: flex;
+}
+
+.maze-cell {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+}
+
+.maze-cell.s {
+  background: red; /* スタート地点 */
+}
+
+.maze-cell.g {
+  background: red; /* ゴール地点 */
+}
+
+.maze-cell.p {
+  background: red; /* ゴール地点 */
+}
+
+.maze-cell. {
+  background: white; /* 通路 */
+}
+
+.maze-cell.* {
+  background: black; /* 壁 */
+}
+
+.maze-cell.path {
+  background-color: #f0f0f0;  /* SとGの背景色と同じ色 */
+}

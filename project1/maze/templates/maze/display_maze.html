@@ -1,0 +1,15 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'maze/styles.css' %}">
+
+{% block content %}
+<h2>Maze</h2>
+<div class="maze">
+  {% for row in maze %}
+    <div class="maze-row">
+      {% for cell in row %}
+        <div class="maze-cell {{ cell|lower }}">{{ cell }}</div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
