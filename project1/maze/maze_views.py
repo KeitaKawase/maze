@@ -87,5 +87,5 @@ def make_maze_from_drawing(m, n, drawing):
     for (r1, c1, r2, c2) in walls:
         break_wall(r1, c1, r2, c2, n, cluster_index, maze)
 
-    show_maze(maze)
+    # show_maze(maze)
     return maze

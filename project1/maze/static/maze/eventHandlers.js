@@ -73,32 +73,46 @@ function isNeighbor(x1, y1, x2, y2) {
 
 
 function submitMaze() {
+  const mazeTitle = document.getElementById('mazeTitle').value || 'Untitled Maze';
+  console.log(`Maze Title: ${mazeTitle}`); // ここでタイトルが表示されるか確認
   const sendData = {
+      title: mazeTitle,
       width: canvas.width / cellSize,
       height: canvas.height / cellSize,
       drawing: clickedCells
   };
-  console.log("Sending data:", sendData);
-  console.log("Clicked cells:", clickedCells.map(cell => `x: ${cell.x}, y: ${cell.y}`));  // 各セルの座標を出力
-  fetch('/generate/', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': getCookie('csrftoken')
-      },
-      body: JSON.stringify(sendData)
-  })
-  .then(response => response.json())
-  .then(data => {
-      if (data.redirect_url) {
-          window.location.href = data.redirect_url;
-      }
-  })
-  .catch(error => {
-      console.error('Error:', error);
-  });
 
+  console.log("Sending data:", JSON.stringify(sendData));
+
+
+  // 3秒待機してから画面遷移する
+  setTimeout(() => {
+      fetch('/generate/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCookie('csrftoken')
+          },
+          body: JSON.stringify(sendData)
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+      })
+      .then(data => {
+          if (data.redirect_url) {
+              window.location.href = data.redirect_url;
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+  }, 0); // 3秒待つ
 }
+
+
 
 function getCookie(name) {
   let cookieValue = null;

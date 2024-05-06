@@ -1,6 +1,6 @@
 <!-- maze/templates/maze/draw_maze.html -->
+{% load static %}
 <!DOCTYPE html>
-{% load static %} 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,8 +14,15 @@
     </style>
 </head>
 <body>
-    <canvas id="mazeCanvas" width="480" height="320"></canvas> <!-- Set default canvas size -->
-    <button onclick="submitMaze()">Submit Maze</button>
+    <!-- Add the title input above the canvas -->
+    <label for="mazeTitle">Maze Title:</label>
+    <input type="text" id="mazeTitle" name="mazeTitle">
+
+    <div>
+        <canvas id="mazeCanvas" width="480" height="320"></canvas> <!-- Set default canvas size -->
+        <button onclick="submitMaze()">Submit Maze</button>
+    </div>
+
 
     <!-- Load the JavaScript files -->
     <script src="{% static 'maze/initCanvas.js' %}"></script>
@@ -24,6 +31,6 @@
         document.addEventListener('DOMContentLoaded', function () {
             initializeCanvas(parseInt("{{ width }}", 10), parseInt("{{ height }}", 10), 20);
         });
-    </script>    
+    </script>
 </body>
 </html>
