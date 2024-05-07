@@ -8,28 +8,45 @@
     <title>Draw Maze</title>
     <style>
         canvas {
-            border: 1px solid black; /* Ensure the canvas has a visible border */
-            background-color: white; /* Set the initial background to white */
+            border: 1px solid black;
+            background-color: white;
         }
     </style>
 </head>
 <body>
-    <!-- Add the title input above the canvas -->
+    <!-- 新しいタイトル入力フォーム -->
     <label for="mazeTitle">Maze Title:</label>
     <input type="text" id="mazeTitle" name="mazeTitle">
 
+    <!-- 以前に保存された迷路を選択するためのプルダウンメニュー -->
+    <label for="savedMazes">Or choose an existing maze:</label>
+    <select id="savedMazes">
+        <option value="">--Select a saved maze--</option>
+        {% for maze in saved_mazes %}
+            <option value="{{ maze.id }}">{{ maze.title }} ({{ maze.width }}x{{ maze.height }})</option>
+        {% endfor %}
+    </select>
+
     <div>
-        <canvas id="mazeCanvas" width="480" height="320"></canvas> <!-- Set default canvas size -->
+        <canvas id="mazeCanvas" width="480" height="320"></canvas>
         <button onclick="submitMaze()">Submit Maze</button>
     </div>
 
-
-    <!-- Load the JavaScript files -->
+    <!-- JavaScriptファイルをロード -->
     <script src="{% static 'maze/initCanvas.js' %}"></script>
     <script src="{% static 'maze/eventHandlers.js' %}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             initializeCanvas(parseInt("{{ width }}", 10), parseInt("{{ height }}", 10), 20);
+
+            // プルダウンメニューで迷路が選択された場合のイベント
+            document.getElementById('savedMazes').addEventListener('change', function (e) {
+                const selectedMazeId = e.target.value;
+                if (selectedMazeId) {
+                    // 選択された迷路に関する追加の処理が必要な場合は、ここで行う
+                    alert(`Selected Maze ID: ${selectedMazeId}`);
+                }
+            });
         });
     </script>
 </body>

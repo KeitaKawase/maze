@@ -73,44 +73,44 @@ function isNeighbor(x1, y1, x2, y2) {
 
 
 function submitMaze() {
+  // タイトルの入力値を取得
   const mazeTitle = document.getElementById('mazeTitle').value || 'Untitled Maze';
-  console.log(`Maze Title: ${mazeTitle}`); // ここでタイトルが表示されるか確認
+  // プルダウンメニューで選択された迷路のIDを取得
+  const selectedMazeId = document.getElementById('savedMazes').value;
+
+  // データを送信用に構築
   const sendData = {
       title: mazeTitle,
       width: canvas.width / cellSize,
       height: canvas.height / cellSize,
-      drawing: clickedCells
+      drawing: clickedCells,
+      savedMazeId: selectedMazeId // プルダウンから選択された迷路のID
   };
 
-  console.log("Sending data:", JSON.stringify(sendData));
-
-
-  // 3秒待機してから画面遷移する
-  setTimeout(() => {
-      fetch('/generate/', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': getCookie('csrftoken')
-          },
-          body: JSON.stringify(sendData)
-      })
-      .then(response => {
-          if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();
-      })
-      .then(data => {
-          if (data.redirect_url) {
-              window.location.href = data.redirect_url;
-          }
-      })
-      .catch(error => {
-          console.error('Error:', error);
-      });
-  }, 0); // 3秒待つ
+  // データをサーバーに送信
+  fetch('/generate/', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(sendData)
+  })
+  .then(response => {
+      if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+  })
+  .then(data => {
+      if (data.redirect_url) {
+          window.location.href = data.redirect_url;
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
 }
+
 
 
 
