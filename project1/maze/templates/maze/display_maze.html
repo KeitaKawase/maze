@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'maze/styles.css' %}">
 
 {% block content %}
-<h2>Maze</h2>
+<h2>{{ title }}</h2> <!-- セッションから渡されたタイトルを表示 -->
 <div class="maze">
   {% for row in maze %}
     <div class="maze-row">
